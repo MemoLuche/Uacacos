@@ -102,14 +102,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#333',
   },
-  homeButton: {
+  HomeButton: {
     position: 'absolute',
     bottom: 40,
     backgroundColor: '#F0F0F0',
     padding: 15,
     borderRadius: 15,
   },
-  homeIcon: {
+  HomeIcon: {
     width: 40,
     height: 40,
   },
