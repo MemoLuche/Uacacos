@@ -32,7 +32,11 @@ export default function MainMenu({ navigation }) {
       </View>
 
       <Image source={require('./assets/franjaverde3.png')} style={styles.wave} resizeMode="cover" />
-      <Image source={require('./assets/salir.png')} style={styles.exit} resizeMode='cover' />
+
+      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <Image source={require('./assets/salir.png')} style={styles.exit} resizeMode='cover' />
+      </TouchableOpacity>
+      
     </View>
   );
 }
@@ -46,7 +50,8 @@ const styles = StyleSheet.create({
   },
   exit : {
     margin: 10,
-    marginTop: 40, 
+    padding: 30,
+    marginTop: 50, 
   },
   title: {
     fontSize: 65,
