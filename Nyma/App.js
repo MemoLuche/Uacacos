@@ -1,23 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Image, Dimensions, Text } from 'react-native';
+import { StyleSheet, View, Image, Dimensions, Text, AppState } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
 export default function App() {
-  // Estado para controlar si se muestra el splash o no
   const [showSplash, setShowSplash] = useState(true);
 
+  // Efecto que muestra el splash cuando el componente se monta
   useEffect(() => {
-    // Temporizador de 3 segundos (3000 ms)
     const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 2000);
-
-    // Limpiar el temporizador al desmontar el componente
+    }, 3000); // Duración del splash (3 segundos)
     return () => clearTimeout(timer);
   }, []);
 
-  // Si showSplash es true, mostramos la pantalla inicial (splash)
+  // Efecto para reiniciar el splash cada vez que la app se vuelve activa
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'active') {
+        // Reiniciamos el splash al reactivar la app
+        setShowSplash(true);
+        const timer = setTimeout(() => {
+          setShowSplash(false);
+        }, 5000); // Duración del splash cada vez que la app vuelve a ser activa
+        return () => clearTimeout(timer);
+      }
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
   if (showSplash) {
     return (
       <View style={styles.container}>
@@ -27,7 +41,6 @@ export default function App() {
           style={styles.nymaImage}
           resizeMode="contain"
         />
-
         {/* Imagen con los abuelitos y la franja verde */}
         <Image
           source={require('./assets/viejitosfranja.png')}
@@ -38,11 +51,11 @@ export default function App() {
     );
   }
 
-  // Cuando el splash desaparece, mostramos el contenido principal
+  // Contenido principal de la aplicación
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.mainText}>Bienvenido a Nyma</Text>
-      {/* Aquí puedes continuar con el resto de tu aplicación */}
+      {/* Aquí agregas el resto de tu app */}
     </View>
   );
 }
@@ -56,13 +69,13 @@ const styles = StyleSheet.create({
   },
   nymaImage: {
     marginTop: 120,
-    width: width * 0.8,  // Aumenta el ancho si lo deseas
-    height: 200,         // Ajusta la altura en proporción
+    width: width * 0.8,  // Ajusta el tamaño según necesites
+    height: 200,
   },
   abuelitosImage: {
-    marginTop: 80,       // Espacio entre el logo y la franja
-    width: width,        // O usa width * 0.9 para dejar margen
-    height: 400,         // Ajusta al tamaño que desees
+    marginTop: 80,
+    width: width,
+    height: 400,
   },
   mainContainer: {
     flex: 1,
