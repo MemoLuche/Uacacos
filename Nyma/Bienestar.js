@@ -34,7 +34,7 @@ export default function Bienestar() {
 
       {/* Botón home */}
       <TouchableOpacity style={styles.homeButton}>
-       <Image source={require('./assets/Home.png')} style={styles.homeIcon} />
+       <Image source={require('./assets/home.png')} style={styles.homeIcon} />
       </TouchableOpacity>
     </View>
   );
