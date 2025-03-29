@@ -4,7 +4,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'rea
 
 const { width } = Dimensions.get('window');
 
-export default function MainMenu({ navigation }) {
+export default function MainMenu({ navigation, onLogout }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>¡Hola!</Text>
