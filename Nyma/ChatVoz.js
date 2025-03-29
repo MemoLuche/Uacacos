@@ -14,6 +14,7 @@ export default function ChatVoz() {
   const [recording, setRecording] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
+  const [respuestaIA, setRespuestaIA] = useState('');
   const soundRef = useRef(null);
 
   const startRecording = async () => {
@@ -84,6 +85,7 @@ export default function ChatVoz() {
         { timeout: 20000 }
       );
       const respuesta = geminiRes.data.response;
+      setRespuestaIA(respuesta);
       agregarMensaje('Gemini', respuesta);
 
       const ttsRes = await fetch(`${BACKEND_URL}/tts`, {
@@ -133,6 +135,12 @@ export default function ChatVoz() {
           </View>
         ))}
       </ScrollView>
+      {respuestaIA !== '' && (
+        <View style={styles.respuestaBox}>
+          <Text style={styles.negrita}>Respuesta de Gemini:</Text>
+          <Text>{respuestaIA}</Text>
+        </View>
+      )}
       {isLoading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
@@ -184,5 +192,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 18,
+  },
+  respuestaBox: {
+    backgroundColor: '#fffbe6',
+    padding: 10,
+    borderRadius: 10,
+    marginVertical: 10,
   },
 });
