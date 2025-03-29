@@ -42,7 +42,6 @@ export default function App() {
             <Stack.Screen name="Configuracion" component={Configuracion} />
             <Stack.Screen name="Recordatorios" component={Recordatorios} />
             <Stack.Screen name="Bienestar" component={Bienestar} />
-            <Stack.Screen name="Registro" component={Registro} />
           </>
         )}
       </Stack.Navigator>
