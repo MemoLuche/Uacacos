@@ -1,38 +1,48 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Image, Dimensions, Text } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
 export default function App() {
+  // Estado para controlar si se muestra el splash o no
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    // Temporizador de 3 segundos (3000 ms)
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 3000);
+
+    // Limpiar el temporizador al desmontar el componente
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Si showSplash es true, mostramos la pantalla inicial (splash)
+  if (showSplash) {
+    return (
+      <View style={styles.container}>
+        {/* Imagen con el texto "NYMA" y las hojas */}
+        <Image
+          source={require('./assets/NYMA.png')}
+          style={styles.nymaImage}
+          resizeMode="contain"
+        />
+
+        {/* Imagen con los abuelitos y la franja verde */}
+        <Image
+          source={require('./assets/viejitosfranja.png')}
+          style={styles.abuelitosImage}
+          resizeMode="contain"
+        />
+      </View>
+    );
+  }
+
+  // Cuando el splash desaparece, mostramos el contenido principal
   return (
-    <View style={styles.container}>
-
-      {/* Título principal */}
-      <Text style={styles.title}>NYMA</Text>
-      <Text style={styles.subtitle}>Apoyo con libertad</Text>
-
-      {/* Hojas en posición absoluta (una a la izquierda, otra a la derecha) */}
-      <Image
-        source={require('./assets/hoja.png')}
-        style={[styles.leaf, { top: 40, left: 20 }]}
-      />
-      <Image
-        source={require('./assets/hoja2.png')}
-        style={[styles.leaf, { top: 80, right: 20 }]}
-      />
-
-      {/* Pareja de abuelitos en el centro */}
-      <Image
-        source={require('./assets/Abuelitos.png')}
-        style={styles.abuelitos}
-      />
-
-      {/* Franja verde (onda) al fondo, en la parte inferior */}
-      <Image
-        source={require('./assets/franjaverde2.png')}
-        style={styles.wave}
-      />
-
+    <View style={styles.mainContainer}>
+      <Text style={styles.mainText}>Bienvenido a Nyma</Text>
+      {/* Aquí puedes continuar con el resto de tu aplicación */}
     </View>
   );
 }
@@ -40,41 +50,29 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FDF9F5', // Color crema aproximado
+    backgroundColor: '#F9F8F6', // Color crema aproximado
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 80,
   },
-  title: {
-    fontSize: 30,
+  nymaImage: {
+    marginTop: 120,
+    width: width * 0.8,  // Aumenta el ancho si lo deseas
+    height: 200,         // Ajusta la altura en proporción
+  },
+  abuelitosImage: {
+    marginTop: 80,       // Espacio entre el logo y la franja
+    width: width,        // O usa width * 0.9 para dejar margen
+    height: 400,         // Ajusta al tamaño que desees
+  },
+  mainContainer: {
+    flex: 1,
+    backgroundColor: '#F9F8F6',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  mainText: {
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#4A4A4A',
-  },
-  subtitle: {
-    fontSize: 18,
-    color: '#7F7F7F',
-    marginTop: 5,
-    marginBottom: 20,
-  },
-  leaf: {
-    position: 'absolute',
-    width: 40,
-    height: 40,
-    resizeMode: 'contain',
-  },
-  abuelitos: {
-    width: width * 0.5,        // Ajusta a tu gusto
-    height: width * 0.5,       // Mantiene proporción
-    resizeMode: 'contain',
-    marginBottom: 20,
-    zIndex: 2,                 // Para que aparezca encima de la onda
-  },
-  wave: {
-    position: 'absolute',
-    bottom: 0,
-    width: width,
-    height: 120,               // Ajusta para que la onda sea más alta o más baja
-    resizeMode: 'cover',
-    zIndex: 1,
+    color: '#333',
   },
 });
