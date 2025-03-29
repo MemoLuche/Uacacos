@@ -14,14 +14,15 @@ import Seguridad from './seguridad';
 
 const { width } = Dimensions.get('window');
 
+const handleSeguridad = () => {
+  // Si usas React Navigation, por ejemplo:
+  // this.props.navigation.navigate('Seguridad');
+  // Aquí, simplemente retornamos el componente para ilustrar.
+  return <Seguridad />;
+};
+
 export default class MainMenu extends Component {
-  // Ejemplo de función para manejar la navegación o lógica al presionar Seguridad
-  handleSeguridad = () => {
-    // Si usas React Navigation, por ejemplo:
-    // this.props.navigation.navigate('Seguridad');
-    // Aquí, simplemente retornamos el componente para ilustrar.
-    return <Seguridad />;
-  };
+  
 
   render() {
     return (
@@ -41,7 +42,7 @@ export default class MainMenu extends Component {
           </TouchableOpacity>
 
           {/* Botón: Seguridad */}
-          <TouchableOpacity style={styles.option} onPress={this.handleSeguridad}>
+          <TouchableOpacity style={styles.option} onPress={handleSeguridad}>
             <Image
               source={require('./assets/seguridad.png')}
               style={styles.icon}
