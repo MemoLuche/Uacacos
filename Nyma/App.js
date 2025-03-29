@@ -32,6 +32,7 @@ export default function App() {
           <>
             <Stack.Screen name="MainMenu" component={MainMenu} />
             <Stack.Screen name="Seguridad" component={Seguridad} />
+            <Stack.Screen name="Login" component={Login} />
           </>
         )}
       </Stack.Navigator>
