@@ -43,7 +43,7 @@ export default function Login({ onLogin }) {
         <Text style={styles.buttonText}>Ingresar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => Alert.alert('Registro')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Recordatorios')}>
         <Text style={styles.register}>Regístrate</Text>
       </TouchableOpacity>
 
