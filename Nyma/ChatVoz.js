@@ -1,14 +1,13 @@
 // ✅ FRONTEND: ChatVoz.js (Expo CLI + React Native)
 
 import React, { useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import axios from 'axios';
 
-const BACKEND_URL = 'http://148.220.60.125:3000'; // 👈 IP actualizada
+const BACKEND_URL = 'http://148.220.60.125:3000';
 
-// 🧠 CONTEXTO de uso de la app para Gemini
 const CONTEXTO = `Estás ayudando a un usuario en una app de asistente por voz para responder preguntas, resolver dudas o interactuar de forma conversacional. Responde de manera clara, empática y útil.`;
 
 export default function ChatVoz() {
@@ -41,7 +40,7 @@ export default function ChatVoz() {
           linearPCMIsFloat: false,
         },
         isMeteringEnabled: false,
-      });      
+      });
       setRecording(recording);
     } catch (error) {
       console.error('Error al iniciar grabación', error);
@@ -57,6 +56,8 @@ export default function ChatVoz() {
       await procesarAudio(uri);
     } catch (error) {
       console.error('Error al detener grabación', error);
+      Alert.alert('Error', 'No se pudo detener la grabación');
+      setIsLoading(false);
     }
   };
 
@@ -77,7 +78,11 @@ export default function ChatVoz() {
       agregarMensaje('Tú', transcription);
 
       const promptCompleto = `${CONTEXTO}\n\nPregunta del usuario: ${transcription}`;
-      const geminiRes = await axios.post(`${BACKEND_URL}/gemini`, { prompt: promptCompleto });
+      const geminiRes = await axios.post(
+        `${BACKEND_URL}/gemini`,
+        { prompt: promptCompleto },
+        { timeout: 20000 }
+      );
       const respuesta = geminiRes.data.response;
       agregarMensaje('Gemini', respuesta);
 
@@ -98,6 +103,7 @@ export default function ChatVoz() {
       await sound.playAsync();
     } catch (error) {
       console.error('Error procesando audio:', error);
+      Alert.alert('Error de conexión', 'Verifica tu red e intenta nuevamente.');
     } finally {
       setIsLoading(false);
     }
