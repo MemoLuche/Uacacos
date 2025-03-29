@@ -34,7 +34,7 @@ export default function MainMenu({ navigation, onLogout }) {
       <Image source={require('./assets/franjaverde3.png')} style={styles.wave} resizeMode="cover" />
 
       <TouchableOpacity onPress={onLogout}>
-        <Image source={require('./assets/salir.png')} style={styles.exit} resizeMode='cover' />
+        <Image source={require('./assets/salir.png')} style={styles.exit}/>
       </TouchableOpacity>
       
     </View>
@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   exit : {
-    margin: 10,
     padding: 30,
     marginTop: 50, 
   },
