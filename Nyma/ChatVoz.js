@@ -1,123 +1,35 @@
 // ✅ FRONTEND: ChatVoz.js (Expo CLI + React Native)
 
-import React, { useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, ScrollView, Alert } from 'react-native';
-import { Audio } from 'expo-av';
-import * as FileSystem from 'expo-file-system';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StyleSheet, ScrollView, Alert } from 'react-native';
 import axios from 'axios';
 
 const BACKEND_URL = 'http://148.220.60.125:3000';
 
-const CONTEXTO = `Estás ayudando a un usuario en una app de asistente por voz para responder preguntas, resolver dudas o interactuar de forma conversacional. Responde de manera clara, empática y útil.`;
+const CONTEXTO = `Estás ayudando a un usuario en una app de asistente para responder preguntas, resolver dudas o interactuar de forma conversacional. Responde de manera clara, empática y útil.`;
 
 export default function ChatVoz() {
-  const [recording, setRecording] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [respuestaIA, setRespuestaIA] = useState('');
-  const soundRef = useRef(null);
+  const [inputText, setInputText] = useState('');
 
-  const startRecording = async () => {
-    try {
-      await Audio.requestPermissionsAsync();
-      await Audio.setAudioModeAsync({ allowsRecordingIOS: true, playsInSilentModeIOS: true });
-      const { recording } = await Audio.Recording.createAsync({
-        android: {
-          extension: '.mp4',
-          outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
-          audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_AAC,
-          sampleRate: 16000,
-          numberOfChannels: 1,
-          bitRate: 32000,
-        },
-        ios: {
-          extension: '.caf',
-          audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_MIN,
-          sampleRate: 16000,
-          numberOfChannels: 1,
-          bitRate: 32000,
-          linearPCMBitDepth: 16,
-          linearPCMIsBigEndian: false,
-          linearPCMIsFloat: false,
-        },
-        isMeteringEnabled: false,
-      });
-      setRecording(recording);
-    } catch (error) {
-      console.error('Error al iniciar grabación', error);
-    }
-  };
-
-  const stopRecording = async () => {
+  const enviarPregunta = async () => {
+    if (!inputText.trim()) return;
+    const pregunta = inputText.trim();
+    setInputText('');
+    agregarMensaje('Tú', pregunta);
     setIsLoading(true);
     try {
-      await recording.stopAndUnloadAsync();
-      const uri = recording.getURI();
-      setRecording(null);
-      await procesarAudio(uri);
-    } catch (error) {
-      console.error('Error al detener grabación', error);
-      Alert.alert('Error', 'No se pudo detener la grabación');
-      setIsLoading(false);
-    }
-  };
-
-  const procesarAudio = async (uri) => {
-    try {
-      const formData = new FormData();
-      formData.append('audio', {
-        uri,
-        name: 'audio.webm',
-        type: 'audio/webm',
-      });
-
-      const sttRes = await fetch(`${BACKEND_URL}/stt`, {
-        method: 'POST',
-        body: formData,
-      });
-      const { transcription } = await sttRes.json();
-      agregarMensaje('Tú', transcription);
-
-      const promptCompleto = `${CONTEXTO}\n\nPregunta del usuario: ${transcription}`;
-      const geminiRes = await axios.post(
-        `${BACKEND_URL}/gemini`,
-        { prompt: promptCompleto },
-        { timeout: 20000 }
-      );
+      const promptCompleto = `${CONTEXTO}\n\nPregunta del usuario: ${pregunta}`;
+      const geminiRes = await axios.post(`${BACKEND_URL}/gemini`, { prompt: promptCompleto });
       const respuesta = geminiRes.data.response;
-      setRespuestaIA(respuesta);
       agregarMensaje('Gemini', respuesta);
-
-      const ttsRes = await fetch(`${BACKEND_URL}/tts`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: respuesta }),
-      });
-
-      const blob = await ttsRes.blob();
-      const path = FileSystem.documentDirectory + 'respuesta.mp3';
-      await FileSystem.writeAsStringAsync(path, await blobToBase64(blob), {
-        encoding: FileSystem.EncodingType.Base64,
-      });
-
-      const { sound } = await Audio.Sound.createAsync({ uri: path });
-      soundRef.current = sound;
-      await sound.playAsync();
     } catch (error) {
-      console.error('Error procesando audio:', error);
-      Alert.alert('Error de conexión', 'Verifica tu red e intenta nuevamente.');
+      console.error('Error al consultar Gemini:', error);
+      Alert.alert('Error', 'No se pudo obtener respuesta de la IA.');
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const blobToBase64 = (blob) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onerror = reject;
-      reader.onload = () => resolve(reader.result.split(',')[1]);
-      reader.readAsDataURL(blob);
-    });
   };
 
   const agregarMensaje = (remitente, texto) => {
@@ -126,7 +38,7 @@ export default function ChatVoz() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>🗣️ Asistente de Voz con Gemini</Text>
+      <Text style={styles.title}>💬 Asistente con Gemini</Text>
       <ScrollView style={styles.chatBox} contentContainerStyle={{ paddingBottom: 20 }}>
         {messages.map((msg, i) => (
           <View key={i} style={msg.remitente === 'Tú' ? styles.burbujaUsuario : styles.burbujaBot}>
@@ -135,22 +47,17 @@ export default function ChatVoz() {
           </View>
         ))}
       </ScrollView>
-      {respuestaIA !== '' && (
-        <View style={styles.respuestaBox}>
-          <Text style={styles.negrita}>Respuesta de Gemini:</Text>
-          <Text>{respuestaIA}</Text>
-        </View>
-      )}
-      {isLoading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
-      ) : (
-        <TouchableOpacity
-          style={recording ? styles.btnDetener : styles.btnHablar}
-          onPress={recording ? stopRecording : startRecording}
-        >
-          <Text style={styles.btnTexto}>{recording ? 'Detener' : 'Hablar'}</Text>
+      <View style={styles.inputRow}>
+        <TextInput
+          style={styles.input}
+          placeholder="Escribe tu pregunta..."
+          value={inputText}
+          onChangeText={setInputText}
+        />
+        <TouchableOpacity style={styles.btnEnviar} onPress={enviarPregunta} disabled={isLoading}>
+          {isLoading ? <ActivityIndicator color="#fff" /> : <Text style={styles.btnTexto}>Enviar</Text>}
         </TouchableOpacity>
-      )}
+      </View>
     </View>
   );
 }
@@ -158,7 +65,7 @@ export default function ChatVoz() {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, paddingTop: 60, backgroundColor: '#f2f2f2' },
   title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
-  chatBox: { flex: 1 },
+  chatBox: { flex: 1, marginBottom: 10 },
   burbujaUsuario: {
     alignSelf: 'flex-end',
     backgroundColor: '#d0ebff',
@@ -176,27 +83,29 @@ const styles = StyleSheet.create({
     maxWidth: '80%',
   },
   negrita: { fontWeight: 'bold', marginBottom: 3 },
-  btnHablar: {
-    backgroundColor: '#4CAF50',
-    padding: 15,
-    borderRadius: 10,
+  inputRow: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
-  btnDetener: {
-    backgroundColor: '#f44336',
-    padding: 15,
+  input: {
+    flex: 1,
+    backgroundColor: '#fff',
     borderRadius: 10,
-    alignItems: 'center',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    fontSize: 16,
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+  btnEnviar: {
+    backgroundColor: '#007bff',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
   },
   btnTexto: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 18,
-  },
-  respuestaBox: {
-    backgroundColor: '#fffbe6',
-    padding: 10,
-    borderRadius: 10,
-    marginVertical: 10,
   },
 });
