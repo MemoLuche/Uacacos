@@ -11,6 +11,7 @@ import Registro from './Registro';
 import Configuracion from './Configuracion';
 import Recordatorios from './Recordatorios';
 import Bienestar from './Bienestar';
+import ConfiguracionUsuario from './ConfiguracionUsuario';
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,7 @@ export default function App() {
             <Stack.Screen name="Configuracion" component={Configuracion} />
             <Stack.Screen name="Recordatorios" component={Recordatorios} />
             <Stack.Screen name="Bienestar" component={Bienestar} />
+            <Stack.Screen name= "ConfiguracionUsuario" component={ConfiguracionUsuario}/>
           </>
         )}
       </Stack.Navigator>
