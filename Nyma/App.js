@@ -12,6 +12,7 @@ import Configuracion from './Configuracion';
 import Recordatorios from './Recordatorios';
 import Bienestar from './Bienestar';
 import ConfiguracionUsuario from './ConfiguracionUsuario';
+import ChatVoz from './ChatVoz';
 
 const Stack = createStackNavigator();
 
@@ -44,6 +45,7 @@ export default function App() {
             <Stack.Screen name="Recordatorios" component={Recordatorios} />
             <Stack.Screen name="Bienestar" component={Bienestar} />
             <Stack.Screen name= "ConfiguracionUsuario" component={ConfiguracionUsuario}/>
+            <Stack.Screen name= "ChatVoz" component={ChatVoz}/>
           </>
         )}
       </Stack.Navigator>

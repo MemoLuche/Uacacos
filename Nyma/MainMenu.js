@@ -29,6 +29,12 @@ export default function MainMenu({ navigation, onLogout }) {
           <Image source={require('./assets/configuracion.png')} style={styles.icon} />
           <Text style={styles.optionText}>Configuración</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('ChatVoz')}>
+          <Image source={require('./assets/configuracion.png')} style={styles.icon} />
+          <Text style={styles.optionText}>Asistente</Text>
+        </TouchableOpacity>
+
       </View>
 
       <Image source={require('./assets/franjaverde3.png')} style={styles.wave} resizeMode="cover" />
