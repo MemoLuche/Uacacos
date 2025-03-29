@@ -11,7 +11,7 @@ export default function App() {
     // Temporizador de 3 segundos (3000 ms)
     const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 3000);
+    }, 2000);
 
     // Limpiar el temporizador al desmontar el componente
     return () => clearTimeout(timer);
