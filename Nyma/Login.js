@@ -62,18 +62,18 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 200,
-    height: 100,
+    height: 170,
     marginBottom: 30,
   },
   input: {
-    width: '100%',
+    width: 250,
     height: 50,
     backgroundColor: '#FFF',
-    borderRadius: 8,
-    borderWidth: 1,
+    borderRadius: 15,
+    borderWidth: 2,
     borderColor: '#DDD',
-    paddingHorizontal: 10,
-    marginBottom: 15,
+    paddingHorizontal: 20,
+    marginBottom: 20,
   },
   forgot: {
     alignSelf: 'flex-end',
@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#2980b9',
     paddingVertical: 15,
-    borderRadius: 8,
+    paddingHorizontal: 30,
+    borderRadius: 15,
     width: '100%',
     alignItems: 'center',
     marginBottom: 15,
@@ -98,12 +99,11 @@ const styles = StyleSheet.create({
   },
   register: {
     color: '#2980b9',
+    marginTop: 20,
     textDecorationLine: 'underline',
   },
   wave: {
-    position: 'absolute',
-    bottom: 0,
-    width,
-    height: 120,
+    width: '100%',
+    height: '100%',
   },
 });
