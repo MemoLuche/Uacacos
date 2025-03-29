@@ -30,7 +30,9 @@ export default function App() {
           </Stack.Screen>
         ) : (
           <>
-            <Stack.Screen name="MainMenu" component={MainMenu} />
+            <Stack.Screen name="MainMenu">
+              {(props) => <MainMenu {...props} onLogout={() => setLoggedIn(false)} />}
+            </Stack.Screen>
             <Stack.Screen name="Seguridad" component={Seguridad} />
           </>
         )}
