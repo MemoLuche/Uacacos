@@ -7,6 +7,7 @@ import Splash from './Splash';
 import Login from './Login';
 import Seguridad from './Seguridad';
 import MainMenu from './MainMenu';
+import Regristro from './Registro';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,7 @@ export default function App() {
               {(props) => <MainMenu {...props} onLogout={() => setLoggedIn(false)} />}
             </Stack.Screen>
             <Stack.Screen name="Seguridad" component={Seguridad} />
+            <Stack.Screen name="Registro" component={Registro} />
           </>
         )}
       </Stack.Navigator>
