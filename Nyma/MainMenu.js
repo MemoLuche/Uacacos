@@ -7,7 +7,7 @@ import Seguridad from './ Seguridad'; // Importamos la clase Seguridad
 export default class MainMenu extends Component {
   render() {
     // Función para manejar el boton de seguridad
-  const handleLogin = () => {
+  const handleSeguridad = () => {
     return <Seguridad />;
   };
     return (
