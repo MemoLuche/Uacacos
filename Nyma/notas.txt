@@ -1,0 +1,3 @@
+Ultimo head estable antes de que memo hibernara:
+
+606bd04818a953c9fb4d22c30c3538ba8c7c61fc
