@@ -7,7 +7,10 @@ import Splash from './Splash';
 import Login from './Login';
 import Seguridad from './Seguridad';
 import MainMenu from './MainMenu';
-import Regristro from './Registro';
+import Registro from './Registro';
+import Configuracion from './Configuracion';
+import Recordatorios from './Recordatorios';
+import Bienestar from './Bienestar';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +39,9 @@ export default function App() {
             </Stack.Screen>
             <Stack.Screen name="Seguridad" component={Seguridad} />
             <Stack.Screen name="Registro" component={Registro} />
+            <Stack.Screen name="Configuracion" component={Configuracion} />
+            <Stack.Screen name="Recordatorios" component={Recordatorios} />
+            <Stack.Screen name="Bienestar" component={Bienestar} />
           </>
         )}
       </Stack.Navigator>

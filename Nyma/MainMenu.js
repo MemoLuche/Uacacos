@@ -10,7 +10,7 @@ export default function MainMenu({ navigation, onLogout }) {
       <Text style={styles.title}>¡Hola!</Text>
 
       <View style={styles.grid}>
-        <TouchableOpacity style={styles.option}>
+        <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Bienestar')}>
           <Image source={require('./assets/bienestar.png')} style={styles.icon} />
           <Text style={styles.optionText}>Bienestar</Text>
         </TouchableOpacity>
@@ -20,12 +20,12 @@ export default function MainMenu({ navigation, onLogout }) {
           <Text style={styles.optionText}>Seguridad</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.option}>
+        <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Recordatorios')}>
           <Image source={require('./assets/recordatorios.png')} style={styles.icon} />
           <Text style={styles.optionText}>Recordatorios</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.option}>
+        <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Configuracion')}>
           <Image source={require('./assets/configuracion.png')} style={styles.icon} />
           <Text style={styles.optionText}>Configuración</Text>
         </TouchableOpacity>
