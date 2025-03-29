@@ -33,8 +33,8 @@ export default function Bienestar() {
       </View>
 
       {/* Botón home */}
-      <TouchableOpacity style={styles.homeButton}>
-       <Image source={require('./assets/home.png')} style={styles.homeIcon} />
+      <TouchableOpacity style={styles.HomeButton}>
+       <Image source={require('./assets/Home.png')} style={styles.HomeIcon} />
       </TouchableOpacity>
     </View>
   );

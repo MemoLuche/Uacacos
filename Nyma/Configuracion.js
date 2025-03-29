@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Alert, ScrollView, Dimensions } from 'react-native';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
+
+// Define a breakpoint for larger screens (e.g., tablets)
+const largeScreenBreakpoint = 650; // Adjust this value as needed
 
 export default function Configuracion({ navigation }) {
   const [usuario, setUsuario] = useState({});
   const [contactos, setContactos] = useState([]);
+  const isLargeScreen = height > largeScreenBreakpoint;
 
   useEffect(() => {
     fetch('http://localhost:3000/api/configuracion/usuario')
@@ -76,7 +80,7 @@ export default function Configuracion({ navigation }) {
 
       {/* Botón de volver al menú principal */}
       <TouchableOpacity onPress={() => navigation.navigate('MainMenu')}>
-        <Image source={require('./assets/home.png')} style={styles.homeButton} />
+        <Image source={require('./assets/Home.png')} style={styles.HomeButton} />
       </TouchableOpacity>
 
       <Image source={require('./assets/franjaverde3.png')} style={styles.wave} resizeMode="cover" />
@@ -88,7 +92,8 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: '#F9F8F6',
-    paddingBottom: 150,
+    paddingBottom: 20,
+    minHeight: height,
   },
   title: {
     fontSize: 30,
@@ -101,9 +106,10 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#DDE4DD',
     borderRadius: 15,
-    width: 0.9 * width,
+    width: '90%', // Adjusted width to be responsive
+    maxWidth: 400, // Added maxWidth to prevent stretching too much on larger screens
     padding: 20,
-    marginBottom: 30,
+    marginBottom: 15, // Further reduced margin
   },
   sectionTitle: {
     fontWeight: 'bold',
@@ -157,10 +163,11 @@ const styles = StyleSheet.create({
   emergencyCard: {
     backgroundColor: '#DDE4DD',
     borderRadius: 15,
-    width: 0.9 * width,
+    width: '90%', // Adjusted width to be responsive
+    maxWidth: 400, // Added maxWidth
     padding: 20,
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: 15, // Further reduced margin
   },
   emergencyButton: {
     backgroundColor: '#D16666',
@@ -192,11 +199,12 @@ const styles = StyleSheet.create({
   homeButton: {
     width: 60,
     height: 60,
-    marginTop: 20,
+    marginTop: 5, // Further reduced marginTop
+    marginBottom: 5, // Further reduced marginBottom
   },
   wave: {
     width: '100%',
     height: 250,
-    marginTop: 30,
+    marginTop: 5, // Further reduced marginTop
   },
 });

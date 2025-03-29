@@ -44,8 +44,8 @@ export default function Seguridad({ navigation }) {
       </View>
 
       {/* Botón home */}
-      <TouchableOpacity style={styles.homeButton} onPress={() => navigation.navigate('MainMenu')}>
-        <Image source={require('./assets/home.png')} style={styles.homeIcon} />
+      <TouchableOpacity style={styles.HomeButton} onPress={() => navigation.navigate('MainMenu')}>
+        <Image source={require('./assets/Home.png')} style={styles.HomeIcon} />
       </TouchableOpacity>
 
       {/* Ola decorativa */}
