@@ -47,7 +47,7 @@ export default function Login({ onLogin }) {
         <Text style={styles.register}>Regístrate</Text>
       </TouchableOpacity>
 
-      <Image source={require('./assets/franjaverde_InicioSesion.png')} style={styles.wave} resizeMode="cover" />
+      <Image source={require('./assets/franjaverde2.png')} style={styles.wave} resizeMode="cover" />
     </View>
   );
 }
@@ -59,14 +59,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    bottom: 200,
   },
   logo: {
-    width: 200,
-    height: 170,
-    marginBottom: 30,
+    width: 400,
+    height: 250,
+    marginTop: 500,
   },
   input: {
-    width: 250,
+    width: 300,
     height: 50,
     backgroundColor: '#FFF',
     borderRadius: 15,
@@ -88,9 +89,8 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 15,
-    width: '100%',
+    width: 200,
     alignItems: 'center',
-    marginBottom: 15,
   },
   buttonText: {
     color: '#FFF',
@@ -99,11 +99,12 @@ const styles = StyleSheet.create({
   },
   register: {
     color: '#2980b9',
-    marginTop: 20,
+    marginTop: 10,
     textDecorationLine: 'underline',
   },
   wave: {
-    width: '100%',
-    height: '100%',
+    width: 450,
+    height: 300,
+    bottom: 50,
   },
 });

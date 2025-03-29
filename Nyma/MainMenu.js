@@ -31,7 +31,8 @@ export default function MainMenu({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      <Image source={require('./assets/franjaverde_InicioSesion.png')} style={styles.wave} resizeMode="cover" />
+      <Image source={require('./assets/franjaverde3.png')} style={styles.wave} resizeMode="cover" />
+      <Image source={require('./assets/salir.png')} style={styles.exit} resizeMode='cover' />
     </View>
   );
 }
@@ -43,11 +44,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9F8F6',
     justifyContent: 'flex-start',
   },
+  exit : {
+    margin: 10,
+    marginTop: 40, 
+  },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginTop: 40,
-    marginBottom: 20,
+    fontSize: 65,
+    fontWeight: 'black',
+    fontFamily: 'Arial',
+    height: 130,
+    marginTop: 130,
   },
   grid: {
     flexDirection: 'row',
@@ -59,22 +65,26 @@ const styles = StyleSheet.create({
     height: 120,
     backgroundColor: '#D9D9D9',
     borderRadius: 8,
-    margin: 10,
+    margin: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: 15,
   },
   icon: {
-    width: 50,
-    height: 50,
-    marginBottom: 10,
+    width: 120,
+    height: 120,
+    marginTop: 33, 
+    marginBottom: 15.7,
+    borderRadius: 15,
   },
   optionText: {
+    marginTop: 0,
     fontWeight: '600',
   },
   wave: {
     position: 'absolute',
     bottom: 0,
-    width,
-    height: 120,
+    width: '100%',
+    height: 350,
   },
 });
