@@ -11,7 +11,7 @@ const db = SQLite.openDatabase(
 export const initDB = () => {
   db.transaction(tx => {
     tx.executeSql(
-      `CREATE TABLE IF NOT EXISTS usuarios (
+      `CREATE TABLE IF NOT EXISTS tUsuario (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           username TEXT NOT NULL,
           password TEXT NOT NULL
@@ -23,7 +23,7 @@ export const initDB = () => {
 export const insertarUsuario = (username, password) => {
   db.transaction(tx => {
     tx.executeSql(
-      'INSERT INTO usuarios (username, password) VALUES (?,?)',
+      'INSERT INTO tUsuario (username, password) VALUES (?,?)',
       [username, password],
       () => console.log('Usuario insertado correctamente'),
       error => console.log('Error insertando usuario:', error)
@@ -34,7 +34,7 @@ export const insertarUsuario = (username, password) => {
 export const validarUsuario = (username, password, callback) => {
   db.transaction(tx => {
     tx.executeSql(
-      'SELECT * FROM usuarios WHERE username = ? AND password = ?',
+      'SELECT * FROM tUsuario WHERE username = ? AND password = ?',
       [username, password],
       (_, results) => {
         if (results.rows.length > 0) {

@@ -33,7 +33,7 @@ export default function MainMenu({ navigation }) {
 
       <Image source={require('./assets/franjaverde3.png')} style={styles.wave} resizeMode="cover" />
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Image source={require('./assets/salir.png')} style={styles.exit} resizeMode='cover' />
       </TouchableOpacity>
       
