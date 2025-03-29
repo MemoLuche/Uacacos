@@ -30,15 +30,14 @@ export default function MainMenu({ navigation, onLogout }) {
           <Text style={styles.optionText}>Configuración</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('ChatVoz')}>
-          <Image source={require('./assets/configuracion.png')} style={styles.icon} />
-          <Text style={styles.optionText}>Asistente</Text>
+        <TouchableOpacity style={styles.option2} onPress={() => navigation.navigate('ChatVoz')}>
+          <Image source={require('./assets/volume.png')} style={styles.icon2} />
+          <Text style={styles.optionText2}>Asistente</Text>
         </TouchableOpacity>
-
       </View>
 
       <Image source={require('./assets/franjaverde3.png')} style={styles.wave} resizeMode="cover" />
-
+      
       <TouchableOpacity onPress={onLogout}>
         <Image source={require('./assets/salir.png')} style={styles.exit}/>
       </TouchableOpacity>
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
   },
   exit : {
     padding: 30,
-    marginTop: 50, 
+    marginTop: 20, 
   },
   title: {
     fontSize: 65,
@@ -71,25 +70,51 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   option: {
-    width: 120,
-    height: 120,
+    width: 30,
+    height: 30,
     backgroundColor: '#D9D9D9',
     borderRadius: 8,
+    margin: 30,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+  },
+  option2: {
+    width: 220,
+    height: 220,
+    backgroundColor: '#D9D9D9',
+    borderRadius: 8,
+    marginTop: 50,
     margin: 20,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
   },
   icon: {
-    width: 120,
-    height: 120,
+    width: 80,
+    height: 80,
+    marginTop: 33, 
+    marginBottom: 15.7,
+    borderRadius: 15,
+  },
+  icon2: {
+    width: 200,
+    height: 200,
     marginTop: 33, 
     marginBottom: 15.7,
     borderRadius: 15,
   },
   optionText: {
+    opacity: 0,
     marginTop: 0,
     fontWeight: '600',
+    fontSize: 20,
+  },
+  optionText2: {
+    marginTop: 0,
+    fontWeight: '600',
+    fontSize: 20,
   },
   wave: {
     position: 'absolute',
