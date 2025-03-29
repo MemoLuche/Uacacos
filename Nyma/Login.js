@@ -1,10 +1,12 @@
 // Login.js
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, TextInput, TouchableOpacity, Text, Image, Alert, StyleSheet, Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
 export default function Login({ onLogin }) {
+  const navigation = useNavigation();
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
 
@@ -16,6 +18,7 @@ export default function Login({ onLogin }) {
       onLogin();
     }
   };
+
 
   return (
     <View style={styles.container}>
@@ -43,9 +46,10 @@ export default function Login({ onLogin }) {
         <Text style={styles.buttonText}>Ingresar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Recordatorios')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Registro')}>
         <Text style={styles.register}>Regístrate</Text>
       </TouchableOpacity>
+
 
       <Image source={require('./assets/franjaverde2.png')} style={styles.wave} resizeMode="cover" />
     </View>
@@ -101,6 +105,7 @@ const styles = StyleSheet.create({
     color: '#2980b9',
     marginTop: 10,
     textDecorationLine: 'underline',
+    marginTop: 20,
   },
   wave: {
     width: 450,
