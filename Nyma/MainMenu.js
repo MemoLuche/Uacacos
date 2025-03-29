@@ -1,107 +1,58 @@
 // MainMenu.js
-import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Dimensions
-} from 'react-native';
-
-// Ajusta la ruta de Seguridad si es necesario
-import Seguridad from './seguridad';
+import React from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
-const handleSeguridad = () => {
-  // Si usas React Navigation, por ejemplo:
-  // this.props.navigation.navigate('Seguridad');
-  // Aquí, simplemente retornamos el componente para ilustrar.
-  return <Seguridad />;
-};
+export default function MainMenu({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>¡Hola!</Text>
 
-export default class MainMenu extends Component {
-  
+      <View style={styles.grid}>
+        <TouchableOpacity style={styles.option}>
+          <Image source={require('./assets/bienestar.png')} style={styles.icon} />
+          <Text style={styles.optionText}>Bienestar</Text>
+        </TouchableOpacity>
 
-  render() {
-    return (
-      <View style={styles.container}>
-        {/* Título principal */}
-        <Text style={styles.title}>¡Hola!</Text>
+        <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Seguridad')}>
+          <Image source={require('./assets/seguridad.png')} style={styles.icon} />
+          <Text style={styles.optionText}>Seguridad</Text>
+        </TouchableOpacity>
 
-        {/* Grid con las cuatro opciones */}
-        <View style={styles.grid}>
-          {/* Botón: Bienestar */}
-          <TouchableOpacity style={styles.option}>
-            <Image
-              source={require('./assets/bienestar.png')}
-              style={styles.icon}
-            />
-            <Text style={styles.optionText}>Bienestar</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.option}>
+          <Image source={require('./assets/recordatorios.png')} style={styles.icon} />
+          <Text style={styles.optionText}>Recordatorios</Text>
+        </TouchableOpacity>
 
-          {/* Botón: Seguridad */}
-          <TouchableOpacity style={styles.option} onPress={handleSeguridad}>
-            <Image
-              source={require('./assets/seguridad.png')}
-              style={styles.icon}
-            />
-            <Text style={styles.optionText}>Seguridad</Text>
-          </TouchableOpacity>
-
-          {/* Botón: Recordatorios */}
-          <TouchableOpacity style={styles.option}>
-            <Image
-              source={require('./assets/recordatorios.png')}
-              style={styles.icon}
-            />
-            <Text style={styles.optionText}>Recordatorios</Text>
-          </TouchableOpacity>
-
-          {/* Botón: Configuración */}
-          <TouchableOpacity style={styles.option}>
-            <Image
-              source={require('./assets/configuracion.png')}
-              style={styles.icon}
-            />
-            <Text style={styles.optionText}>Configuración</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Franja verde en la parte inferior */}
-        <View style={styles.bottomWaveContainer}>
-          <Image
-            source={require('./assets/franjaverde_InicioSesion.png')}
-            style={styles.waveImage}
-            resizeMode="cover"
-          />
-        </View>
+        <TouchableOpacity style={styles.option}>
+          <Image source={require('./assets/configuracion.png')} style={styles.icon} />
+          <Text style={styles.optionText}>Configuración</Text>
+        </TouchableOpacity>
       </View>
-    );
-  }
+
+      <Image source={require('./assets/franjaverde_InicioSesion.png')} style={styles.wave} resizeMode="cover" />
+    </View>
+  );
 }
 
-// Estilos
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9F8F6',
     alignItems: 'center',
-    // Justifica el contenido en la parte superior
+    backgroundColor: '#F9F8F6',
     justifyContent: 'flex-start',
   },
   title: {
-    marginTop: 40,
     fontSize: 24,
     fontWeight: 'bold',
+    marginTop: 40,
     marginBottom: 20,
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginTop: 10,
   },
   option: {
     width: 120,
@@ -118,17 +69,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   optionText: {
-    fontSize: 14,
     fontWeight: '600',
   },
-  bottomWaveContainer: {
+  wave: {
     position: 'absolute',
     bottom: 0,
-    width: width,
+    width,
     height: 120,
-  },
-  waveImage: {
-    width: '100%',
-    height: '100%',
   },
 });

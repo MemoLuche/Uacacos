@@ -1,23 +1,21 @@
 // Seguridad.js
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default class Seguridad extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Seguridad</Text>
-        <Text>Bienvenido al apartado de Seguridad de NYMA</Text>
-      </View>
-    );
-  }
+export default function Seguridad() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Seguridad</Text>
+      <Text>Bienvenido al apartado de Seguridad de NYMA</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#F9F8F6',
   },
   title: {
