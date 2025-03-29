@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import Seguridad from './Seguridad'; // Importamos la clase Seguridad
+import Seguridad from './ Seguridad'; // Importamos la clase Seguridad
 
 export default class MainMenu extends Component {
   render() {
