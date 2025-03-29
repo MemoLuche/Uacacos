@@ -11,6 +11,8 @@ import {
   Alert,
 } from 'react-native';
 
+import MainMenu from './MainMenu'; // Importamos la clase MainMenu
+
 const { width, height } = Dimensions.get('window');
 
 export default function App() {
@@ -20,6 +22,9 @@ export default function App() {
   // Estados para login
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
+
+  // Estado para controlar si el usuario inició sesión
+  const [loggedIn, setLoggedIn] = useState(false);
 
   // Efecto que muestra el splash cuando el componente se monta
   useEffect(() => {
@@ -33,7 +38,6 @@ export default function App() {
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (nextAppState) => {
       if (nextAppState === 'active') {
-        // Muestra el splash de nuevo al volver a la app
         setShowSplash(true);
         const timer = setTimeout(() => {
           setShowSplash(false);
@@ -47,10 +51,12 @@ export default function App() {
   // Función para manejar el login
   const handleLogin = () => {
     if (!usuario || !contrasena) {
-      Alert.alert('Error', 'Por favor, ingresa tu usuario y contraseña');
+      setLoggedIn(true);
+      // Alert.alert('Error', 'Por favor, ingresa tu usuario y contraseña');
     } else {
       // Aquí agregarías la lógica real de autenticación (API, validación, etc.)
-      Alert.alert('Login', `Usuario: ${usuario}\nContraseña: ${contrasena}`);
+      // Por el ejemplo, simulamos un login exitoso:
+      setLoggedIn(true);
     }
   };
 
@@ -58,13 +64,11 @@ export default function App() {
   if (showSplash) {
     return (
       <View style={styles.splashContainer}>
-        {/* Imagen con el texto "NYMA" y las hojas */}
         <Image
           source={require('./assets/NYMA.png')} 
           style={styles.nymaImage}
           resizeMode="contain"
         />
-        {/* Imagen con los abuelitos y la franja verde */}
         <Image
           source={require('./assets/viejitosfranja.png')}
           style={styles.abuelitosImage}
@@ -74,11 +78,14 @@ export default function App() {
     );
   }
 
-  // Contenido principal: Pantalla de inicio de sesión
+  // Si el usuario inició sesión, se muestra el MainMenu
+  if (loggedIn) {
+    return <MainMenu />;
+  }
+
+  // Caso contrario, se muestra la pantalla de login
   return (
     <View style={styles.loginContainer}>
-
-      {/* Sección superior con logo/imagen NYMA + hojas */}
       <View style={styles.topSection}>
         <Image
           source={require('./assets/NYMAInicioSesion.png')}
@@ -87,7 +94,6 @@ export default function App() {
         />
       </View>
 
-      {/* Sección de formulario */}
       <View style={styles.formContainer}>
         <TextInput
           style={styles.input}
@@ -121,7 +127,6 @@ export default function App() {
         </TouchableOpacity>
       </View>
 
-      {/* Franja verde en la parte inferior */}
       <View style={styles.bottomWaveContainer}>
         <Image
           source={require('./assets/franjaverde_InicioSesion.png')}
@@ -135,7 +140,6 @@ export default function App() {
 
 // Estilos
 const styles = StyleSheet.create({
-  /* ----- Splash ----- */
   splashContainer: {
     flex: 1,
     backgroundColor: '#F9F8F6',
@@ -152,8 +156,6 @@ const styles = StyleSheet.create({
     width: width,
     height: 400,
   },
-
-  /* ----- Login ----- */
   loginContainer: {
     flex: 1,
     backgroundColor: '#F9F8F6',
